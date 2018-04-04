@@ -13,3 +13,7 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
     const resp = match[1];
     bot.sendMessage(chatId, `Вы написали - \"${resp}\"`);
 });
+bot.onText(/\/what/, (msg, match) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, `Я нужен для того, чтобы вы научились меня писать на JS`);
+});
