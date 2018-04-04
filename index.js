@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
-
+const bomgificate = require('bomgificate');
 const bot = new TelegramBot(process.env.TOKEN, {polling: true});
 
 bot.onText(/\/hello/, (msg, match) => {
@@ -13,7 +13,12 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
     const resp = match[1];
     bot.sendMessage(chatId, `Вы написали - \"${resp}\"`);
 });
+
 bot.onText(/\/what/, (msg, match) => {
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, `Я нужен для того, чтобы вы научились меня писать на JS`);
+});
+
+bot.onText(/\/bomg (.+)/, (msg, match) => {
+    bot.sendMessage(msg.chat.id, bomgificate(match[1]));
 });
