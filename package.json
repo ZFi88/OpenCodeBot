@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bomgificate": "^1.0.2",
+    "bomgificate": "^1.0.4",
     "nconfig": "0.0.6",
     "node-telegram-bot-api": "^0.30.0"
   }
