@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const bomgificate = require('bomgificate');
+const weather = require('weather-js');
 const bot = new TelegramBot(process.env.TOKEN, {polling: true});
 
 bot.onText(/\/hello/, (msg, match) => {
