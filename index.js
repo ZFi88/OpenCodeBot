@@ -9,10 +9,23 @@ bot.onText(/\/hello/, (msg, match) => {
     bot.sendMessage(chatId, `Привет! Я OpenCodeBot! Мой исходный код на GitHub - https://github.com/ZFi88/OpenCodeBot`);
 });
 
-bot.onText(/\/weather/, (msg, match) => {
+bot.onText(/^\/weather ?(.*)?/, (msg, match) => {
     const chatId = msg.chat.id;
-    const resp = match[1];
-    bot.sendMessage(chatId, `Я могу вам рассказать о погоде!`);
+    const search = match[1];
+    if(!search) {
+        bot.sendMessage(chatId, `Погода в каком городе интересует? Например: /weatherMoscow`);
+        return;
+    }
+    const degreeType = 'C';
+    weather.find({search, degreeType}, (err, result) => {
+        if(result.length === 0) {
+            bot.sendMessage(chatId, `Не найдено: ${search}`);
+        } else if(!err) {
+            bot.sendMessage(chatId, `Температура в ${search}: ${result[0].current.temperature} °${degreeType}`);
+        } else {
+            bot.sendMessage(chatId, `Произошла ошибка: ${err}`);
+        }
+      });
 });
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
