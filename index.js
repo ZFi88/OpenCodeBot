@@ -9,6 +9,12 @@ bot.onText(/\/hello/, (msg, match) => {
     bot.sendMessage(chatId, `Привет! Я OpenCodeBot! Мой исходный код на GitHub - https://github.com/ZFi88/OpenCodeBot`);
 });
 
+bot.onText(/\/weather/, (msg, match) => {
+    const chatId = msg.chat.id;
+    const resp = match[1];
+    bot.sendMessage(chatId, `Я могу вам рассказать о погоде!`);
+});
+
 bot.onText(/\/echo (.+)/, (msg, match) => {
     const chatId = msg.chat.id;
     const resp = match[1];

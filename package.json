@@ -12,6 +12,7 @@
   "dependencies": {
     "bomgificate": "^1.0.4",
     "nconfig": "0.0.6",
-    "node-telegram-bot-api": "^0.30.0"
+    "node-telegram-bot-api": "^0.30.0",
+    "weather-js": "^2.0.0"
   }
 }
