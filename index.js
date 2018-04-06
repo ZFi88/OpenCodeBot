@@ -22,7 +22,8 @@ bot.onText(/^\/weather ?(.*)?/, (msg, match) => {
         if (result.length === 0) {
             bot.sendMessage(chatId, `Не найдено: ${search}`);
         } else if (!err) {
-            bot.sendMessage(chatId, `Температура в ${search}: ${result[0].current.temperature} °${degreeType}`);
+            const firstResult = result[0];
+            bot.sendMessage(chatId, `Температура в ${firstResult.location.name}: ${firstResult.current.temperature} °${degreeType}`);
         } else {
             bot.sendMessage(chatId, `Произошла ошибка: ${err}`);
         }
