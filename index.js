@@ -55,3 +55,10 @@ bot.onText(/^\/short (.+)/, async (msg, match) => {
         bot.sendMessage(msg.chat.id, 'Некорректная ссылка или ссылка уже укорочена!');
     }
 });
+
+bot.onText(/^\/wherevova/, (msg, match) => {
+    const photo = `${__dirname}/data/vova.jpg`;
+    bot.sendPhoto(msg.chat.id, photo, {
+      caption: "Вот же я!"
+    });
+});
