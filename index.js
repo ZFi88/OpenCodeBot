@@ -48,8 +48,13 @@ bot.onText(/^\/short (.+)/, async (msg, match) => {
     const chatId = msg.chat.id;
     const resp = match[1];
 
-    const response = await axios.post("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA9tZHBZ4JEJ53Cguf24dvyEiln7s65jow",
-        {longUrl: resp}, {headers: {'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA9tZHBZ4JEJ53Cguf24dvyEiln7s65jow",
+            {longUrl: resp}, {headers: {'Content-Type': 'application/json'}});
+        bot.sendMessage(msg.chat.id, response.data.id);
+    } catch (e) {
+        bot.sendMessage(msg.chat.id, 'Ссылка уже укорочена!');
+        return;
+    }
 
-    bot.sendMessage(msg.chat.id, response.data.id);
 });
