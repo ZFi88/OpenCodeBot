@@ -2,7 +2,45 @@ const TelegramBot = require('node-telegram-bot-api');
 const bomgificate = require('bomgificate');
 const weather = require('weather-js');
 const axios = require("axios");
+const engine = require('engine.io');
+
 const bot = new TelegramBot(process.env.TOKEN, {polling: true});
+const server = engine.listen(process.env.PORT);
+
+let connections = [];
+
+server.on('connection', async (socket) => {
+    const notify = (type) => console.log(type, connections.length);
+    connections.push({socket, busy: false});
+    socket.on('close', () => {
+        connections = connections.filter(c => c.socket !== socket);
+        notify('disconnect');
+    });
+    notify('connect');
+});
+
+bot.onText(/^\/grass (.*)/, async ({chat}, match) => {
+    if(connections.length === 0) {
+        bot.sendMessage(chat.id, "Нет доступных грассхопперов");
+        return;
+    }
+    function getFreeGrasshopperSocket(){
+        const freeGrassWorkers = connections.filter(c => !c.busy);
+        if(freeGrassWorkers.length === 0) return null;
+        freeGrassWorkers[0].busy = true;
+        return freeGrassWorkers[0].socket;
+    }
+    const socket = getFreeGrasshopperSocket();
+    if(!socket) {
+        bot.sendMessage(chat.id, "Нет свободных грассхопперов");
+        return;
+    }
+    const request = match[1];   
+    socket.send(`${request}`);
+    socket.on('message', data => {
+        bot.sendMessage(chat.id, `Готово: ${data}`);
+    })
+});
 
 bot.onText(/\/hello/, (msg, match) => {
     const chatId = msg.chat.id;

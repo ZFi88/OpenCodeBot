@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bomgificate": "^1.0.4",
+    "engine.io": "^3.2.0",
     "nconfig": "0.0.6",
     "node-telegram-bot-api": "^0.30.0",
     "weather-js": "^2.0.0"
