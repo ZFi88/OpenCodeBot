@@ -45,16 +45,12 @@ bot.onText(/\/bomg (.+)/, (msg, match) => {
 });
 
 bot.onText(/^\/short (.+)/, async (msg, match) => {
-    const chatId = msg.chat.id;
     const resp = match[1];
-
     try {
         const response = await axios.post("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA9tZHBZ4JEJ53Cguf24dvyEiln7s65jow",
             {longUrl: resp}, {headers: {'Content-Type': 'application/json'}});
         bot.sendMessage(msg.chat.id, response.data.id);
     } catch (e) {
         bot.sendMessage(msg.chat.id, 'Некорректная ссылка или ссылка уже укорочена!');
-        return;
     }
-
 });
