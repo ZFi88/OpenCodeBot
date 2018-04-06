@@ -53,7 +53,7 @@ bot.onText(/^\/short (.+)/, async (msg, match) => {
             {longUrl: resp}, {headers: {'Content-Type': 'application/json'}});
         bot.sendMessage(msg.chat.id, response.data.id);
     } catch (e) {
-        bot.sendMessage(msg.chat.id, 'Ссылка уже укорочена!');
+        bot.sendMessage(msg.chat.id, 'Некорректная ссылка или ссылка уже укорочена!');
         return;
     }
 
