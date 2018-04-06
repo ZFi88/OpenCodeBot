@@ -58,7 +58,11 @@ bot.onText(/^\/short (.+)/, async (msg, match) => {
 
 bot.onText(/^\/wherevova/, (msg, match) => {
     const photo = `${__dirname}/data/vova.jpg`;
-    bot.sendPhoto(msg.chat.id, photo, {
-      caption: "Вот же я!"
-    });
+    const timeout = 3000;
+    bot.sendMessage(msg.chat.id, 'Поиск...');
+    setTimeout(() => {
+        bot.sendPhoto(msg.chat.id, photo, {
+            caption: "Вот же я!"
+          });
+    }, timeout);
 });
