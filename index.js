@@ -107,7 +107,7 @@ bot.onText(/^\/wherevova/, (msg, match) => {
 
 bot.onText(/\/reverse (.+)/, (msg, match) => {
     function reverseStr(str) {
-        let newStr = str.toLowerCase().split('').reverse().join();
+        let newStr = str.toLowerCase().split('').reverse().join('');
         return newStr.charAt(0).toUpperCase() + newStr.substr(1);
     }
     const reversed = reverseStr(match[1]);
