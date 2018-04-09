@@ -111,5 +111,5 @@ bot.onText(/\/reverse (.+)/, (msg, match) => {
         return newStr.charAt(0).toUpperCase() + newStr.substr(1);
     }
     const reversed = reverseStr(match[1]);
-    bot.sendMessage(chatId, reversed);
+    bot.sendMessage(msg.chat.id, reversed);
 });
