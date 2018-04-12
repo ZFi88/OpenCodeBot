@@ -1,8 +1,9 @@
 
 const commands = {
     'reverse': require('./commands/reverse').command,
-    'hacker': require('./commands/hacker').command
+    'hacker': require('./commands/hacker').command,
 };
+commands['start'] = require('./commands/start').makeCommand(commands);
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env.TOKEN, {polling: true});
 bot.onText(/^\/(\w+)(\s?(.*))?$/, async (msg, match) => {
@@ -12,20 +13,5 @@ bot.onText(/^\/(\w+)(\s?(.*))?$/, async (msg, match) => {
     const command = commands[commandName];
     if(command) {
         command(bot, msg, commandData);
-    } else {
-        bot.sendMessage(msg.chat.id, '' + ['*Список команд:*\n```', ...Object.keys(commands).map(x => ` ${x}`)].join('\n') + '```', {parse_mode: 'Markdown'});
     }
-});
-
-const engine = require('engine.io');
-const server = engine.listen(process.env.PORT);
-let connections = [];
-server.on('connection', async (socket) => {
-    const notify = (type) => console.log(type, connections.length);
-    connections.push({socket, busy: false});
-    socket.on('close', () => {
-        connections = connections.filter(c => c.socket !== socket);
-        notify('disconnect');
-    });
-    notify('connect');
 });
